@@ -1,118 +1,35 @@
-def max_product(arr:int, n:int):
-    return max(max_diagonal(arr,n),max_linear(arr,n))
+def Largest_Grid_Product(arr:list[list[int]],n:int):
+    return(max(Horizontal_maximum_product(arr,n),Vertical_maximum_product(arr,n),Right_Diagonal_max_product(arr,n),Left_Diagonal_max_product(arr,n)))
 
-#assume len(row)==len(column)
-def max_linear(arr:int , n:int):
-    ph,pv,sh,sv,mh,mv=1,1,0,0,0,0
-    for i in range(0,len(arr)):
-        ph,pv,sh,sv,mh,mv=1,1,0,0,0,0
-        for j in range(0,len(arr)):
-            if(j>=n):
-                if(arr[i][j-n]!=0):
-                    ph//=arr[i][j-n]
-                if(arr[j-n][i]!=0):
-                    pv//=arr[j-n][i]
-            if(arr[i][j]!=0):
-                ph*=arr[i][j]
-                if(sh!=0):
-                    sh-=1
-            else:
-                sh=n
-            if(arr[j][i]!=0):
-                pv*=arr[j][i]
-                if(sv!=0):
-                    sv-=1
-            else:
-                sv=n
+def Horizontal_maximum_product(arr,n):
+    for i in range(len(arr)):
+        for j in range(len(arr[0])):
+            pass
 
-            if(j>=n-1):
-                if(sh==0):
-                    mh=max(mh,ph)
-                if(sv==0):
-                    mv=max(mv,pv)
-        if(sh==0):
-            mh=max(mh,ph)
-        if(sv==0):
-            mv=max(mv,pv)
-    return max(mh,mv)
+def Vertical_maximum_product(arr,n):
+    for i in range(len(arr[0])):
+        for j in range(len(arr)):
+            pass
 
-def max_diagonal(arr:int , n:int):
-    prdu,prdd,pldu,pldd,srdu,srdd,sldu,sldd,mrd,mld=1,1,1,1,0,0,0,0,0,0
-    for i in range(0,len(arr)-n):
-        prdu,prdd,pldu,pldd,srdu,srdd,sldu,sldd,mrd,mld=1,1,1,1,0,0,0,0,0,0
-        for j in range(0,len(arr)-i):
-            if(j>=n):
-                if(arr[i+j-n][j-n]!=0):
-                    prdu//=arr[i+j-n][j-n]
-                if(arr[j-n][i+j-n]!=0):
-                    prdd//=arr[j-n][i+j-n]
-                if(arr[len(arr)-1-i-j+n][j-n]!=0):
-                    pldu//=arr[len(arr)-1-i-j+n][j-n]
-                if(arr[j-n][len(arr)-1-i-j+n]!=0):
-                    pldd//=arr[j-n][len(arr)-1-i-j+n]
+def Right_Diagonal_max_product(arr,n):
+    #three parts: 
+    # left bottom triangle 
+    # mid parallelogram 
+    # right top triangle
+    for i in range(len(arr[0])-n+1):
+        for j in range():
+            pass
 
-            if(arr[i+j][j]!=0):
-                prdu*=arr[i+j][j]
-                if(srdu!=0):
-                    srdu-=1
-            else:
-                srdu=n
-            if(arr[j][i+j]!=0):
-                prdd*=arr[j][i+j]
-                if(srdd!=0):
-                    srdd-=1
-            else:
-                srdd=n
-            if(arr[len(arr)-1-i-j][j]!=0):
-                pldu*=arr[len(arr)-1-i-j][j]
-                if(sldu!=0):
-                    sldu-=1
-            else:
-                sldu=n
-            if(arr[j][len(arr)-1-i-j]!=0):
-                pldd*=arr[j][len(arr)-1-i-j]
-                if(sldd!=0):
-                    sldd-=1
-            else:
-                sldd=n
-            if(j>=n-1):
-                if(srdu==0):
-                    mrd=max(mrd,prdu)
-                if(srdd==0):
-                    mrd=max(mrd,prdd)
-                if(sldu==0):
-                    mld=max(mld,pldu)
-                if(sldd==0):
-                    mld=max(mld,pldd)
-        if(srdu==0):
-            mrd=max(mrd,prdu)
-        if(srdd==0):
-            mrd=max(mrd,prdd)
-        if(sldu==0):
-            mld=max(mld,pldu)
-        if(sldd==0):
-            mld=max(mld,pldd)
-    return max(mrd,mld)
+def Left_Diagonal_max_product(arr,n):
+    #Three Parts:
+    #  Left top triangle 
+    #  Mid Parallelogram 
+    #  Right Bottom Triangle
+    for i in range(len(arr[0]),n,-1):
+        for j in range():
+            pass
+
+
 arr=[[1,2,3],[4,5,6],[7,8,9]]
 arr2=[[9,8,7],[6,5,4],[3,2,1]]
-a=[[8,2,22,97,38,15,00,40,00,75,4,5,7,78,52,12,50,77,91,8],[
-49,49,99,40,17,81,18,57,60,87,17,40,98,43,69,48,4,56,62,00],[
-81,49,31,73,55,79,14,29,93,71,40,67,53,88,30,3,49,13,36,65],[
-52,70,95,23,4,60,11,42,69,24,68,56,1,32,56,71,37,2,36,91],[
-22,31,16,71,51,67,63,89,41,92,36,54,22,40,40,28,66,33,13,80],[
-24,47,32,60,99,3,45,2,44,75,33,53,78,36,84,20,35,17,12,50],[
-32,98,81,28,64,23,67,10,26,38,40,67,59,54,70,66,18,38,64,70],[
-67,26,20,68,2,62,12,20,95,63,94,39,63,8,40,91,66,49,94,21],[
-24,55,58,5,66,73,99,26,97,17,78,78,96,83,14,88,34,89,63,72],[
-21,36,23,9,75,00,76,44,20,45,35,14,00,61,33,97,34,31,33,95],[
-78,17,53,28,22,75,31,67,15,94,3,80,4,62,16,14,9,53,56,92],[
-16,39,5,42,96,35,31,47,55,58,88,24,00,17,54,24,36,29,85,57],[
-86,56,00,48,35,71,89,7,5,44,44,37,44,60,21,58,51,54,17,58],[
-19,80,81,68,5,94,47,69,28,73,92,13,86,52,17,77,4,89,55,40],[
-4,52,8,83,97,35,99,16,7,97,57,32,16,26,26,79,33,27,98,66],[
-88,36,68,87,57,62,20,72,3,46,33,67,46,55,12,32,63,93,53,69],[
-4,42,16,73,38,25,39,11,24,94,72,18,8,46,29,32,40,62,76,36],[
-20,69,36,41,72,30,23,88,34,62,99,69,82,67,59,85,74,4,36,16],[
-20,73,35,29,78,31,90,1,74,31,49,71,48,86,81,16,23,57,5,54],[
-1,70,54,71,83,51,54,69,16,92,33,48,61,43,52,1,89,19,67,48]]
-print(max_product(a,4))
+a=[[8,2,22,97,38,15,00,40,00,75,4,5,7,78,52,12,50,77,91,8],[49,49,99,40,17,81,18,57,60,87,17,40,98,43,69,48,4,56,62,00],[81,49,31,73,55,79,14,29,93,71,40,67,53,88,30,3,49,13,36,65],[52,70,95,23,4,60,11,42,69,24,68,56,1,32,56,71,37,2,36,91],[22,31,16,71,51,67,63,89,41,92,36,54,22,40,40,28,66,33,13,80],[24,47,32,60,99,3,45,2,44,75,33,53,78,36,84,20,35,17,12,50],[32,98,81,28,64,23,67,10,26,38,40,67,59,54,70,66,18,38,64,70],[67,26,20,68,2,62,12,20,95,63,94,39,63,8,40,91,66,49,94,21],[24,55,58,5,66,73,99,26,97,17,78,78,96,83,14,88,34,89,63,72],[21,36,23,9,75,00,76,44,20,45,35,14,00,61,33,97,34,31,33,95],[78,17,53,28,22,75,31,67,15,94,3,80,4,62,16,14,9,53,56,92],[16,39,5,42,96,35,31,47,55,58,88,24,00,17,54,24,36,29,85,57],[86,56,00,48,35,71,89,7,5,44,44,37,44,60,21,58,51,54,17,58],[19,80,81,68,5,94,47,69,28,73,92,13,86,52,17,77,4,89,55,40],[4,52,8,83,97,35,99,16,7,97,57,32,16,26,26,79,33,27,98,66],[88,36,68,87,57,62,20,72,3,46,33,67,46,55,12,32,63,93,53,69],[4,42,16,73,38,25,39,11,24,94,72,18,8,46,29,32,40,62,76,36],[20,69,36,41,72,30,23,88,34,62,99,69,82,67,59,85,74,4,36,16],[20,73,35,29,78,31,90,1,74,31,49,71,48,86,81,16,23,57,5,54],[1,70,54,71,83,51,54,69,16,92,33,48,61,43,52,1,89,19,67,48]]
