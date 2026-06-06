@@ -23,13 +23,11 @@ def Quadratic_primes(lim:int):
             if((1+i+j) in pr):
                 if((4+2*i+j) in pr):
                     Pairs.append([i,j])
-                    print(i,j)
     n=2
     while(len(Pairs)>1):
-        print(n)
         for i in Pairs:
             if(n**2 + i[0]*n + i[1] not in pr):
                 Pairs.remove(i)
         n+=1
-    return Pairs
+    return Pairs,n
 print(Quadratic_primes(1001))
